@@ -1,0 +1,49 @@
+---
+title: 'In-Class Exercise #1'
+author: "Ian Kahrilas"
+date: "2/4/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lavaan)
+library(haven)
+library(semPlot)
+```
+
+
+```{r reading in the data set}
+dat <- read_sav("LOT12.SAV")
+glimpse(dat)
+summary(dat)
+```
+
+```{r define one factor model}
+one_fac_cfa <- 'global_opt =~ XpctBest + BritSide + OptFutur + SilvrLin + GoWrong + NevrXpct + NevrWork + NoCount'
+```
+
+```{r fit one factor model}
+fit <- cfa(one_fac_cfa, data = dat, std.lv = TRUE, estimator = "ML")
+summary(fit, fit.measure = TRUE, standardized = TRUE)
+```
+
+```{r draw diagram}
+semPaths(fit, whatLabels = "est", rotation = 4, nCharNodes = 0, sizeMan2 = 6, sizeMan = 8, sizeLat = 16)
+```
+
+```{r define two factor model}
+two_fac_cfa <- 'Optimism =~ XpctBest + BritSide + OptFutur + SilvrLin
+                Pessimism =~ GoWrong + NevrXpct + NevrWork + NoCount'
+```
+
+
+```{r fit two factor model}
+fit <- cfa(two_fac_cfa, data = dat, std.lv = TRUE, estimator = "ML")
+summary(fit, fit.measure = TRUE, standardized = TRUE)
+```
+
+
+
+
