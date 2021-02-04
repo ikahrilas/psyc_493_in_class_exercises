@@ -38,12 +38,28 @@ two_fac_cfa <- 'Optimism =~ XpctBest + BritSide + OptFutur + SilvrLin
                 Pessimism =~ GoWrong + NevrXpct + NevrWork + NoCount'
 ```
 
-
 ```{r fit two factor model}
 fit <- cfa(two_fac_cfa, data = dat, std.lv = TRUE, estimator = "ML")
 summary(fit, fit.measure = TRUE, standardized = TRUE)
 ```
 
+```{r draw diagram for two factor model}
+semPaths(fit, whatLabels = "est", rotation = 4, nCharNodes = 0, sizeMan2 = 6, sizeMan = 8, sizeLat = 16, sizeLat2 = 14)
+```
+
+```{r define two factor model with constrained XpctBest & Britside indicators}
+three_fac_cfa <- 'Optimism =~ v1*XpctBest + v1*BritSide + OptFutur + SilvrLin
+                  Pessimism =~ GoWrong + NevrXpct + NevrWork + NoCount'
+```
+
+```{r fit two factor model with constrained loadings}
+fit <- cfa(three_fac_cfa, data = dat, std.lv = TRUE, estimator = "ML")
+summary(fit, fit.measure = TRUE, standardized = TRUE)
+```
+
+```{r draw diagram for two factor model with constrained loadings}
+semPaths(fit, whatLabels = "est", rotation = 4, nCharNodes = 0, sizeMan2 = 6, sizeMan = 8, sizeLat = 16, sizeLat2 = 14)
+```
 
 
 
