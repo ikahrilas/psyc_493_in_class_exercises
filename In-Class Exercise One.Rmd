@@ -2,7 +2,7 @@
 title: 'In-Class Exercise #1'
 author: "Ian Kahrilas"
 date: "2/4/2021"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
